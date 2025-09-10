@@ -1,6 +1,7 @@
 import pandas as pd
 import argparse
 import joblib
+from gen_report import gen_report
 
 def detect_anomalies(input_csv, model_file, output_csv):
     df = pd.read_csv(input_csv)
@@ -24,6 +25,9 @@ if __name__ == "__main__":
     parser.add_argument('--input', type=str, required=True, help="Input CSV features file")
     parser.add_argument('--model', type=str, required=True, help="Trained model file")
     parser.add_argument('--output', type=str, required=True, help="Output anomalies CSV file")
+    parser.add_argument('--report', type=str, required=False, help="Anomaly report file")
     args = parser.parse_args()
 
     detect_anomalies(args.input, args.model, args.output)
+    if args.report:
+        gen_report(args.output, args.report)
